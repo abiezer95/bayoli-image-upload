@@ -1,0 +1,57 @@
+#hdprints{
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 455px;
+    height: 100%;
+    background: #fff;
+    z-index: 999999999999999999999999;
+}
+.edit-print-content{
+    /* display: flex;
+    justify-content: center */
+}
+
+.editMenu {
+     position: absolute;
+     top: 40px;
+     left: 10px;
+ }
+ .editMenu label{
+     color: #000
+ }
+ .editMenu span{
+     /* color: #000 */
+     font-size: 14px
+ }
+ .editMenu {
+     position: absolute;
+     width: 450px;
+     height: 80%;
+     overflow-y:auto;
+     overflow-x:hidden;
+ }
+ .elSize div{
+     display:flex;
+     flex-direction: row;
+     margin-top: 5px;
+ }
+ .elSize div input{
+     width: 180px;
+     margin-left:5px;
+     position: relative;
+     
+ }
+
+ .pNumber{
+     font-size: 15px;
+     position: relative;
+     top: 5px
+ }
+
+ .pstatus{
+     position: relative;
+     top:20px;
+     left:20px;
+     z-index: 999999999;
+ }

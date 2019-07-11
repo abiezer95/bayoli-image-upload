@@ -1,0 +1,173 @@
+h4{
+  text-decoration: underline;
+  font-weight: bold
+}
+#sizes{
+    position: absolute;
+    right: 0;
+    top:0;
+    width: 455px;
+    height: 100%;
+    background: #fff
+  }
+  .flecha-d{
+    position: absolute;
+    right:10px;
+    top: 26px;
+    color: #000;
+    font-size: 16px;
+    z-index: 9999999999;
+  }
+  .flecha-r{
+    position: absolute;
+    left:10px;
+    top: 26px;
+    color: #000;
+    font-size: 16px;
+  }
+  .menuSlider{
+    position: relative;
+    border:groove 1px;
+    overflow: auto;
+    overflow-y: hidden;
+    width: 100%;
+    height:71px;
+    display:flex;
+    flex-direction: row 
+  }
+  .menuSlider ul {
+    position:relative;
+    top: 20px;
+    left: 30px
+  }
+
+  .menuSlider::-webkit-scrollbar {
+    width: 8px;     /* Tamaño del scroll en vertical */
+    height: 5px;    /* Tamaño del scroll en horizontal */
+    /* display: none;   */
+  }
+  
+  .menuSlider::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+.menuSlider::-webkit-scrollbar-thumb:hover {
+    background: #b3b3b3;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.menuSlider::-webkit-scrollbar-thumb:active {
+    background-color: #999999;
+}
+
+.menuSlider::-webkit-scrollbar-track {
+    background: #e1e1e1;
+    border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+.menuSlider::-webkit-scrollbar-track:hover,
+.menuSlider::-webkit-scrollbar-track:active {
+  background: #d4d4d4;
+}
+
+/* all the list */
+.menuSlider::-webkit-scrollbar {
+  width: 8px;     /* Tamaño del scroll en vertical */
+  height: 5px;    /* Tamaño del scroll en horizontal */
+  /* display: none;   */
+}
+
+.menuSlider::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo y agregamos una sombra cuando esté en hover */
+/* .sizeContent::-webkit-scrollbar-thumb:hover {
+  background:orange;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.sizeContent::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+.sizeContent::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 4px;
+} */
+.sizeNewOptions {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 20px;
+}
+.sizeNewOptions button{
+  margin-left: 10px
+}
+.editSizes{
+  /* display: none */
+}
+.sizeContent{
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  top: 10px;
+  height: 80%;
+  /* display:none */
+}
+.sizeTabs div{
+    position: relative;
+    margin-top: 35px;
+    left: 15px;
+}
+
+.sizeTabs section {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+    position: relative;
+    bottom: 12px;
+    /* justify-content: flex-end; */
+}
+
+.sizeTabs section label {
+    color: #000;
+    font-weight: 450;
+    font-size: 16px;
+    position: relative;
+    top: 5px
+}
+
+.sizeTabs section span {
+    position: absolute;
+    margin-top: 25px;
+    color: #000;
+    font-weight: 500;
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+.sizeTabs section .countSize input {
+    width: 40px;
+    margin-left: 5px;
+    height: 35px;
+}
+
+.sizeTabs section .countSize button {
+    height: 35px;
+    margin-left: 5px
+}
+
+.sizeTabs section .countSize {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    right: 45px;
+    margin-top: 5px;
+}
+

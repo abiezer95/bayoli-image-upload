@@ -1,0 +1,181 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik+Mono+One&display=swap");
+
+i{
+  cursor:pointer
+}
+/* this is for size and edit */
+.pclose{
+  position: absolute;
+  left: -30px;
+  top:-5px;
+  color:#000;
+  background: #fff;
+  border-radius: 360px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.pclose i{
+  position: absolute;
+  left: 10px;
+  top: 15px
+}
+/*  */
+.sideBarTitle {
+    position: relative;
+    font-size: 20px;
+    font-weight: bold;
+    opacity: 1;
+    font-family: 'Rubik Mono One', sans-serif;
+}
+
+.sideBarSubtitle {
+    position: relative;
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+.addMore{
+    margin-top: 20px;
+    width:250px;
+    height:220px;
+    /* display: flex;
+    justify-content: center; */
+}
+.addMore i{
+    font-size: 40px;
+    position: relative;
+    top: 34%
+}
+.addMore a{
+    font-size: 20px;
+    position: relative;
+    top: 10px;
+    color:#000 
+}
+
+.piempty{
+    position: relative;
+    top: 35%
+}
+
+#piData{
+  display:none
+}
+
+#output{
+  width: 340px;
+  border: solid 5px rgba(251, 198, 24, 0.7);
+  border-radius: 3px
+}
+
+.modalHeight .inout img{
+  /* opacity: 0.7 */
+}
+.modalHeight{
+  position: relative;
+  min-height: 361px;
+  top:10px;
+  /* max-height: 361px; */
+}
+.modaloptions{
+  position: relative;
+  margin-top: 31px;
+  bottom: 13px;
+  left: 69px;
+  /* bottom: 36px;
+  left: 145px; */
+}
+.modaloptions button{
+ position: relative;
+ right: 14px;
+
+}
+.modaloptions label{
+  opacity: 0.9;
+  color: #000
+}
+
+#modaloptions{
+  position: absolute;
+  top: -3px;
+  right: 66px;
+}
+
+.list-prints{
+  opacity: 9;
+  color: #000;
+  width: 350px;
+  border: groove 1px;
+}
+
+.list-prints .list-group-item{
+  border-bottom: groove 2px;
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.list-prints .list-group-item:hover{
+  background:#f2f2f2;
+}
+
+.list-prints .active:hover{
+  background: #007bff;
+}
+
+.selectedprint{
+  position: absolute;
+  right: 10px;
+  top: 17px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.price{
+  position: relative;
+  top: 33px;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  color: #000;
+}
+
+.price span{
+  font-size: 25px;
+  position: relative;
+  bottom: 7px;
+}
+
+.price label{
+  position: absolute;
+  font-size: 14px;
+  top: 26px;
+  color: #000;
+  opacity: 0.7;
+}
+
+.price label a{
+  color: rgba(0, 0, 245);
+  opacity: 1;
+}
+
+.multiselect{
+  margin: 5px 5px 5px 7px;
+  list-style: none
+}
+
+.multiselect button{
+  background: #f2f2f2;
+  color:#000;
+  width: 21em;
+}
+
+.piSizes{
+  position: fixed;
+  top:0;
+  width:100%;
+  height:100%;
+  background: rgba(33, 33, 33, 0.5);
+  z-index: 999999999999999999999999999;
+  display: none
+}
