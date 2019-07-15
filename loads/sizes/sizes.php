@@ -1,14 +1,16 @@
-<?php require '../../database/definitions.php'; ?>
-    <div id=sizes>
+<?php 
+require '../../database/definitions.php'; 
+require_once('../../../wp-load.php');
+
+$logged = is_user_logged_in();
+?>
+    <div id="side_bar_custom">
         <div class="pclose" onclick="pclose()">
             <i class="fas fa-chevron-left"></i>
         </div>
         <i class="fas fa-chevron-right flecha-d"></i>
         <div class="menuSlider">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <!-- <li class="nav-item">
-                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">See All</a>
-            </li> -->
+        <ul class="nav nav-tabs allTabs">
                 <?php 
                     $sizes = getAll('sizes', ['name', 'id'], '');
                     $n = 0;
@@ -16,7 +18,7 @@
                     foreach ($sizes as $key => $value) {
                         echo '
                             <li class="nav-item">
-                                <a class="nav-link" id="home-tab" data-toggle="tab" href="#'.str_replace(' ', '_', $sizes[$key]['name']).'" role="tab" aria-controls="home" aria-selected="true"
+                                <a class="nav-link" href="#'.str_replace(' ', '_', $sizes[$key]['name']).'"
                                 key="'.$sizes[$key]['id'].'"
                                 >'.$sizes[$key]['name'].'</a>
                             </li>
@@ -29,9 +31,24 @@
         <i class="fas fa-chevron-left flecha-r"></i>
 
         <div class="sizeNewOptions">
-            <button type="button" class="btn btn-success addNewSisez">Add new sizes</button>
-            <button type="button" class="btn btn-success editNewSizes">Edit sizes</button>
+            <?php 
+                if ($logged) { //is logged
+            ?>
+                <button type="button" class="btn btn-success addNewSises">Add new sizes</button>
+                <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button>
+            <?php }else {?>
+                <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button>
+                <button type="button" class="btn btn-warning">Reset options</button>
+            <?php }?>
         </div>
+        
+        <form return false>
+            <div class="form-group emailSize">
+                <label for="exampleInputEmail1">Email address:</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" require>
+                <small id="emailHelp" class="form-text text-muted"></small>
+            </div>
+        </form>
 
 <div class="editSizes"></div>
 
@@ -39,63 +56,153 @@
     <div class="tab-content sizeTabs" id="myTabContent">
 
 <?php 
+    $no = 0;
     while($i < $n) {
-        $typeSizes = getAll('types_sizes', ['name', 'price'], ['id_sizes' =>  $sizes[$i]['id']]);
+        $typeSizes = getAll('types_sizes', ['name', 'price', 'id', 'id_sizes'], ['id_sizes' =>  $sizes[$i]['id']]);
         echo '
-            <div class="tab-pane fade show size_tab_pane" id="'.str_replace(' ', '_', $sizes[$i]['name']).'" role="tabpanel" aria-labelledby="home-tab">
+            <div id="'.str_replace(' ', '_', $sizes[$i]['name']).'" >
                 <h4>'.$sizes[$i]['name'].'</h4>
                 <hr style="width:85%">';
                 
                 foreach ($typeSizes as $key => $value) {
                     echo '
                     <section>
-                        <label>'.$typeSizes[$key]['name'].'</label>
+                        <label>'.$typeSizes[$key]['name'].' <i class="selected-sizes"></i></label>
                         <span>$'.$typeSizes[$key]['price'].' each</span>
                         <div class="countSize">
-                            <button type="button" class="btn btn-primary">-</button>
-                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value=0>
-                            <button type="button" class="btn btn-primary">+</button>
+                            <button type="button" class="btn btn-primary" onclick="res_prints('.$no.', '.$i.')">-</button>
+                            <input type="text" class="form-control prints_count" key="'.$typeSizes[$key]['id'].' '.$typeSizes[$key]['id_sizes'].'" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value=0 disabled>
+                            <button type="button" class="btn btn-primary" onclick="sum_prints('.$no.', '.$i.')">+</button>
                         </div>
                     </section>
                     ';
+                    $no++;
                 }
 ?>
-        </div>
-            <?php $i++; } ?>
             </div>
+            <?php $i++; } ?>
         </div>
     </div>
+</div>
+</div>
 
     <style>
         @import url('loads/sizes/css/sizes.css');
     </style>
 
+<script src="js/jquery.mousewheel.js"></script>
 <script>
+var sizes = <?php echo json_encode(getAll('sizes', ['name', 'id'], '')); ?>;
+
+var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '')); ?>;
+
     $(document).ready(() => {
-        $('.addNewSisez').click(() => {
-            openEditSize()
+
+        $('.menuSlider').mousewheel(function(e, delta) {
+            $(this).scrollLeft(this.scrollLeft + (-delta * 40));
+            e.preventDefault();
+        });
+
+        $('.addNewSises').click(() => {
+            loadEditSize()
         })
         
         $('.editNewSizes').click(() => {
-            openEditSize()
-            var sizes = <?php echo json_encode(getAll('sizes', ['name', 'id'], '')); ?>;
-
-            var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '')); ?>;
- 
-            $('#myTab li a').each(function(){
-                var tab = $(this).attr('class');
-                tab = tab.split(' ')
-                if(tab.indexOf('active') >= 0){
-                    active = $(this).attr('key')
-                    console.log(active)
-                }
-    
-            })
+            loadEditSize(true)
         })
-    })
 
-    function openEditSize(){
-        $('.editSizes').load('loads/sizes/editSizes.php');
-        $('.sizeContent').hide('fast');
+    })
+    // suma y resta 
+    function sum_prints(n, i){
+        $(".prints_count:eq("+n+")").each(function(){
+            valor = $(this).val();
+            valor++;
+            $(this).val(valor)
+            $(".selected-sizes:eq("+n+")").addClass("fas fa-flag-checkered")
+            // console.log()
+        })
+
+        $(".emailSize").show('fast')
     }
+    function res_prints(n, i){ // this is the flat signal
+        $(".prints_count:eq("+n+")").each(function(){
+            valor = $(this).val();
+            if(valor > 0){
+                valor--;
+                $(this).val(valor)
+            }
+            
+            if(valor == 0){
+                $(".selected-sizes:eq("+n+")").removeClass("fas fa-flag-checkered")
+            }
+            // console.log()
+        })
+    }
+    function pclose(){
+        $(".piSizes").css("display", 'none')
+        $('#picmodal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        // fullSize()
+    }
+    
+    <?php 
+        if($logged){
+    ?>
+        function loadEditSize(n){
+            $('.editSizes').load('loads/sizes/editSizes.php');
+            $('.sizeContent').hide('fast');
+
+            if(n) localStorage.setItem('pstatus', 'edit')
+        }
+    <?php } ?>
+        function finish_order(){
+            // 
+            var email = $('.emailSize input[type="email"]').val();
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            
+            sizes = [];
+            
+            $(".prints_count").each(function(){
+                if($(this).val() != 0){
+                    id = $(this).attr('key').split(' ');
+                    sizes.push({id_types: id[0], id_sizes: id[1], counts: $(this).val()})
+                }
+            })
+
+            if(sizes.length < 1){
+                toasts('You must to select at least one size for your print.')
+            }else if(re.test(String(email).toLowerCase())){ //validating email
+                send_order(sizes, email)
+            }else{
+                toasts('You must to provide a valid email address to continue.')
+            }
+        }
+
+        function send_order(sizes, email){
+                var data = new FormData($("#upload_img")[0]);
+                
+                data.append('rcrop', localStorage.getItem('rcrop'))
+                data.append('crop_status', localStorage.getItem('crop_status'))
+                data.append('type_prints_id', localStorage.getItem('pActiveId'))
+                data.append('sizes', JSON.stringify(sizes))
+                data.append('email', email)
+
+                $.ajax({
+                    type: "POST",
+                    url: 'database/img_uploaded/upload.php',
+                    processData: false,
+                    data: data,
+                    contentType: false,
+                    success: function (data) {
+                        localStorage.setItem('uploaded', data)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        
+                    }
+                })
+
+                $(".piSizes").hide("fast")        
+        }
 </script>

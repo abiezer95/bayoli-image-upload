@@ -1,6 +1,6 @@
 <?php require '../../database/definitions.php'; ?>
-<div id='hdprints'>
-    <div class="pclose" onclick="pclose()">
+<div id='side_bar_custom'>
+    <div class="pclose">
         <i class="fas fa-chevron-left"></i>
     </div>
     <div class="edit-print-content">
@@ -8,7 +8,7 @@
         <button class="btn btn-danger pstatus" key='true'>Status: Adding</button>
         <form class="editMenu">
             <br>
-            <span>To change the status for add or edit elements click in the buttom above.</span>
+            <span>Click to the button status above to edit or add new elements for type prints.</span>
             <div class="form-group">
                 <label>Type of prints Elements: </label>
                 <div class="elSize"></div>
@@ -72,7 +72,11 @@
            pdelete = ['']
         })
         
-        addElements()
+        $('.pclose').click(() => {
+            $(".piSizes").css("display", 'none')
+        })
+
+        addElements() // executing add element input
     })
 function pclose(){
     $(".piSizes").css("display", 'none')
@@ -104,7 +108,7 @@ function deleteEl(n, i){
     let status = localStorage.getItem('pstatus')
     if(status == 'edit'){
         pdelete.push(n)
-        localStorage.setItem('pdelete', pdelete)
+        // localStorage.setItem('pdelete', pdelete)
     }
 
     $(".element"+i+"").remove()

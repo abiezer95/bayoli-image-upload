@@ -2,13 +2,8 @@ h4{
   text-decoration: underline;
   font-weight: bold
 }
-#sizes{
-    position: absolute;
-    right: 0;
-    top:0;
-    width: 455px;
-    height: 100%;
-    background: #fff
+  .selected-sizes{
+    color: rgb(253, 158, 33)
   }
   .flecha-d{
     position: absolute;
@@ -27,18 +22,18 @@ h4{
   }
   .menuSlider{
     position: relative;
-    border:groove 1px;
-    overflow: auto;
+    /* border:groove 1px; */
+    overflow: scroll;
     overflow-y: hidden;
-    width: 100%;
+    left: 23px;
+    width: 408px;
     height:71px;
-    display:flex;
-    flex-direction: row 
   }
   .menuSlider ul {
     position:relative;
     top: 20px;
-    left: 30px
+    left: 30px;
+    width: max-content;
   }
 
   .menuSlider::-webkit-scrollbar {
@@ -116,7 +111,7 @@ h4{
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
-  top: 10px;
+  top: 20px;
   height: 80%;
   /* display:none */
 }
@@ -153,7 +148,7 @@ h4{
 }
 
 .sizeTabs section .countSize input {
-    width: 40px;
+    width: 45px;
     margin-left: 5px;
     height: 35px;
 }
@@ -171,3 +166,11 @@ h4{
     margin-top: 5px;
 }
 
+/* email */
+.emailSize{
+  position: relative;
+  top: 30px;
+  left: 17px;
+  width: 404px;
+  display:none;
+}

@@ -1,5 +1,17 @@
+<?php 
+require 'database/definitions.php'; 
+require_once('../wp-load.php');
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+$logged = is_user_logged_in();
+// if ($logged == false) {
+//   header("Refresh:0");
+// }
+?>
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8" />
 
@@ -15,19 +27,18 @@
     <!-- css -->
     <link
       rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      href="css/bootstrap.min.css"
     />
     <link href="css/fonts/css/all.css" rel="stylesheet" />
     <link href="css/main.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
 
     <!-- bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap/popper.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
-  </head>
-
+  </head>  
   <body>
     <!-- <div class="loader" style="display: none;">
         
@@ -47,38 +58,14 @@
 
           <div class="side_menu_section">
             <ul class="menu_nav">
-              <li>
-                <a href="https://colorlib.com/preview/theme/cocoon/index.html"
-                  >Home</a
-                >
-              </li>
-              <li>
-                <a href="https://colorlib.com/preview/theme/cocoon/about.html"
-                  >About Us</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://colorlib.com/preview/theme/cocoon/services.html"
-                  >Services</a
-                >
-              </li>
-              <li class="active">
-                <a
-                  href="https://colorlib.com/preview/theme/cocoon/portfolio.html"
-                  >Portfolio</a
-                >
-              </li>
-              <li>
-                <a href="https://colorlib.com/preview/theme/cocoon/blog.html"
-                  >Blog</a
-                >
-              </li>
-              <li>
-                <a href="https://colorlib.com/preview/theme/cocoon/contact.html"
-                  >Contact</a
-                >
-              </li>
+            <?php 
+              $menus = get_terms('nav_menu');
+            // wp_nav_menu( 'header-menu' );
+              foreach ($menus as $menu) {
+                echo '<li><a href="'.$menu->slug.'">'.ucfirst($menu->name).'</a></li>';
+              }
+              // print_r($menu);
+            ?>
             </ul>
           </div>
 
@@ -86,10 +73,13 @@
             <h4 class="side_title">filter by:</h4>
             <ul id="filtr-container" class="filter_nav">
               <li data-filter="*" class="active"><a>all</a></li>
-              <li data-filter=".branding"><a>branding</a></li>
+              <?php
+                // echo '<li data-filter="completed"><a>Completed</a></li>';
+              ?>
+              <!-- <li data-filter=".branding"><a>Popular</a></li>
               <li data-filter=".design"><a>design</a></li>
               <li data-filter=".photography"><a>photography</a></li>
-              <li data-filter=".architecture"><a>architecture</a></li>
+              <li data-filter=".architecture"><a>architecture</a></li> -->
             </ul>
           </div>
 
@@ -98,28 +88,28 @@
               <ul class="social_menu">
                 <li>
                   <a
-                    href="https://colorlib.com/preview/theme/cocoon/portfolio.html#"
+                    href=""
                   >
                     <i class="ion ion-social-pinterest"></i>
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://colorlib.com/preview/theme/cocoon/portfolio.html#"
+                    href=""
                   >
                     <i class="ion ion-social-facebook"></i>
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://colorlib.com/preview/theme/cocoon/portfolio.html#"
+                    href=""
                   >
                     <i class="ion ion-social-twitter"></i>
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://colorlib.com/preview/theme/cocoon/portfolio.html#"
+                    href=""
                   >
                     <i class="ion ion-social-dribbble"></i>
                   </a>
@@ -166,97 +156,11 @@
               </a>
             </div>
             <!-- here -->
-            <div
-              class="grid-item  branding architecture  col-md-6 col-lg-3"
-              style="position: absolute; left: 24.9962%; top: 0px;"
-            >
-              <a title="project name 2">
-                <div class="project_box_one">
-                  <img src="images/port2.png" alt="pro1" />
-                  <div class="product_info">
-                    <div class="product_info_text">
-                      <div class="product_info_text_inner">
-                        <i class="ion ion-plus"></i>
-                        <h4>project name</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
+            <div class="picUpdateFrame">
+              <?php 
+                include('images.php');
+              ?>
             </div>
-            <div
-              class="grid-item  design col-sm-12 col-md-6 col-lg-3"
-              style="position: absolute; left: 49.9925%; top: 0px;"
-            >
-              <a title="project name 5">
-                <div class="project_box_one">
-                  <img src="images/port3.png" alt="pro1" />
-                  <div class="product_info">
-                    <div class="product_info_text">
-                      <div class="product_info_text_inner">
-                        <i class="ion ion-plus"></i>
-                        <h4>project name</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="grid-item  photography design col-sm-12 col-md-6 col-lg-3"
-              style="position: absolute; left: 74.9887%; top: 0px;"
-            >
-              <a title="project name 5">
-                <div class="project_box_one">
-                  <img src="images/port4.png" alt="pro1" />
-                  <div class="product_info">
-                    <div class="product_info_text">
-                      <div class="product_info_text_inner">
-                        <i class="ion ion-plus"></i>
-                        <h4>project name</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="grid-item  branding photography  col-sm-12 col-md-6 col-lg-3"
-              style="position: absolute; left: 0%; top: 266px;"
-            >
-              <a title="project name 5">
-                <div class="project_box_one">
-                  <img src="images/port5.png" alt="pro1" />
-                  <div class="product_info">
-                    <div class="product_info_text">
-                      <div class="product_info_text_inner">
-                        <i class="ion ion-plus"></i>
-                        <h4>project name</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="grid-item   architecture design col-sm-12 col-md-6 col-lg-3"
-              style="position: absolute; left: 24.9962%; top: 266px;"
-            >
-              <a title="project name 5">
-                <div class="project_box_one">
-                  <img src="images/port6.png" alt="pro1" />
-                  <div class="product_info">
-                    <div class="product_info_text">
-                      <div class="product_info_text_inner">
-                        <i class="ion ion-plus"></i>
-                        <h4>project name</h4>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -268,6 +172,28 @@
       <?php include('loads/modal/modal.php');?>
     </div>
 
-    
+    <div class="admin">
+    <?php 
+          if($logged){
+            include('loads/admin/header.php');
+          }
+    ?>
+    </div>
+
+    <div class="toasts">
+        <div role="alert" aria-live="assertive" aria-atomic="true" id="" class="toast" data-autohide="false">
+          <div class="toast-header">
+            <i class="fas fa-bell"></i>
+            <strong class="mr-auto ml-1">Notification</strong>
+            <small class="ml-5">Just Now</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="toast-body" style="color:#000;font-weight:bold;font-size:13px">
+            toast-description
+          </div>
+        </div>
+    </div>
   </body>
 </html>

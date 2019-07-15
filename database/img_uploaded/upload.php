@@ -1,72 +1,43 @@
 <?php
     header('Access-Control-Allow-Origin: *');
     require '../definitions.php';
-
-    $url = 'tmp/1.jpg';
+    include('imgCrop.php');
     
-    $infoImg = getimagesize($url);
-
-        $imgX = $infoImg[0];
-        $imgY = $infoImg[1];
-        $typeFile = $infoImg['mime'];
-
-    $src_image = imagecreatefromjpeg($url);
-    //new size
-    $src_w = 200;
-    $src_h = 200;
-
-    //coords init
-    $src_x = 100;
-    $src_y = 100;
-
-    $dst_x = 0;
-    $dst_y = 0;
-
-    $dst_w = 300;
-    $dst_h = 300;
-
-    $dst_image = imagecreatetruecolor($dst_w, $dst_h);
-
-    imagecopyresampled(
-        $dst_image,
-        $src_image,
-        $dst_x,
-        $dst_y,
-        $src_x,
-        $src_y,
-        $dst_w,
-        $dst_h,
-        $src_w,
-        $src_h
-    );
-
-    header('content-type: '.$typeFile);
-
-    imagejpeg($dst_image, 'tmp/11.jpg', 100);
-
-    imagedestroy($dst_image);
-    imagedestroy($src_image);
-    // print_r($infoImg);
-    // $type = substr($_FILES['new_pic']['name'], strrpos($_FILES['new_pic']['name'], '.')+1);
+    $email = $_POST['email'];
+    $size = json_decode($_POST['sizes']);
     
-    // $hash = substr( md5(microtime()), 1, 8);
-    
-    // if(!empty($_FILES['new_pic']))
-    // {
-    //     $path = "tmp/";
-    //     $path = $path . basename($hash.".".$type) ;
-    //     if(move_uploaded_file($_FILES['new_pic']['tmp_name'], $path)) {
-    //         echo $hash.".".$type;
-    //     } else{
-    //         echo "error";
-    //     }
-    // }
-//     $_FILES[input-field-name][tmp_name]
+    $type_sizes = [];
+    $id_sizes = [];
+    $order_counts = [];
 
-// $_FILES[input-field-name][size]
+    $em = filter_var(strtolower($email), FILTER_VALIDATE_EMAIL);
+    if(strlen($em) > 1){
+        $imgName = saveImage();
+        $img = explode('.', $imgName);
+        //img adding
+        $data = insert('images_print', [
+            'name' => $img[0],
+            'type' => $img[1],
+            'date' => date('Y/m/d H:i:s')
+        ]);
+        $img_id = $data->id();
+        
+        foreach ($size as $key => $value) {
+            array_push($type_sizes, $size[$key]->id_types);
+            array_push($id_sizes, $size[$key]->id_sizes);
+            array_push($order_counts, $size[$key]->counts);
+        }
 
-// $_FILES[input-field-name][type]
-
-// $_FILES[input-field-name][error]
-    // echo $fileName;
+        // // getAll('sizes', );
+        $db = insert('order_print', [
+            'id_img' => $img_id,
+            'id_sizes' => json_encode($id_sizes),
+            'id_types_sizes' => json_encode($type_sizes),
+            'id_type_prints' => $_POST['type_prints_id'],
+            'order_count' => json_encode($order_counts),
+            'email' => $em,
+        ]);
+        
+        echo $db->id();
+    }
 ?>

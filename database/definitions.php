@@ -10,7 +10,7 @@
     function update($table, $column, $where){
         $database = db();
         $database->update($table, $column, $where);
-        echo "Update Success";
+        // echo "Update Success";
     }
     
     function delete($table, $column){
@@ -18,16 +18,21 @@
         $database->delete($table, [
             "AND" => $column
         ]);
-        echo "true";
+        // echo "true";
     }
     
     function insert($table, $column){
         $database = db();
         $database->insert($table, $column);
-        echo "true";
+        // echo "true";
         return $database;
     }
 
+    function countTable($table, $column){
+        $database = db();
+        $count = $database->count($table, $column);
+        return $count;
+    }
     // print_r(getAll('sizes', ['name'], ''));
     // insert('sizes', [
     //     'name' => 'abiezer'

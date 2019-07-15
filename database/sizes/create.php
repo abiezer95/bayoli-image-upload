@@ -5,14 +5,17 @@
     $menuName = $_POST['menu'];
     $names = $_POST['elname'];
     $prices = $_POST['elprice'];
+    $id = $_POST['id'];
     
-    if(strlen($menuName) > 0){
-        $db = insert('sizes', [
-            'name' => $menuName
-        ]);
-        $id = $db->id();
+    if($id == 'null'){
+        if(strlen($menuName) > 0){
+            $db = insert('sizes', [
+                'name' => $menuName
+            ]);
+            $id = $db->id();
+        }
     }
-    // 
+
     foreach ($names as $key => $value) {
         $db = insert('types_sizes', [
             'name' => $names[$key],

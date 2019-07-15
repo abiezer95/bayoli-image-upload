@@ -1,12 +1,3 @@
-#hdprints{
-    position: absolute;
-    right: 0;
-    top:0;
-    width: 455px;
-    height: 100%;
-    background: #fff;
-    z-index: 999999999999999999999999;
-}
 .edit-print-content{
     /* display: flex;
     justify-content: center */
