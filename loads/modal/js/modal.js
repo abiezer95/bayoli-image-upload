@@ -1,14 +1,14 @@
 $(document).ready(function(){
-    price = $('#pChanged').attr('price')
-    $('.price span tt').html(price)
+    // price = $('#pChanged').attr('price')
+    // $('.price span tt').html(price)
     localStorage.setItem('pActiveId', $('#pChanged').attr('key'))
     ////////////////////////////////////////////////////
     $(".list-group-item").on("click", function() {
         $(".selectedprint").removeClass("far fa-check-circle")
         
         //to change the price
-        price = $(this).attr('price')
-        $('.price span tt').html(price)
+        // price = $(this).attr('price')
+        // $('.price span tt').html(price)
         localStorage.setItem('pActiveId', $(this).attr('key'))
 
         modalPrints(this);

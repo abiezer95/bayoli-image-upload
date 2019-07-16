@@ -4,7 +4,7 @@
 
     $id = $_POST['id'];
     $names = $_POST['printName'];
-    $prices = $_POST['printPrice'];
+    // $prices = $_POST['printPrice'];
     $deleted = $_POST['eliminated'];
 
     if($id == null) $id = [""];
@@ -18,7 +18,7 @@
     foreach ($names as $key => $value) {
         update('type_prints', [
             'name' => $names[$key],
-            'price' => $prices[$key]
+            // 'price' => $prices[$key]
         ], [
             'id' => (int) $id[$key]
         ]);

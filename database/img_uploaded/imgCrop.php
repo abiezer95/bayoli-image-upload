@@ -11,14 +11,16 @@ function saveImage(){
         if(move_uploaded_file($_FILES['new_pic']['tmp_name'], $path)) {
             if($_POST['crop_status'] == 'true'){
                 crop($hash.".".$type);
-            }else{
-                echo "Normal pic true";
             }
-
+            // else{
+            //     echo "Normal pic true";
+            // }
+            
             return $hash.".".$type;
-        } else{
-            echo "error";
-        }
+        } 
+        // else{
+        //     echo "error";
+        // }
     }
 }
 

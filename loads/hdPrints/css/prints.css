@@ -31,8 +31,11 @@
      width: 180px;
      margin-left:5px;
      position: relative;
-     
  }
+ 
+.elName{
+    width: 378px !important;
+}
 
  .pNumber{
      font-size: 15px;

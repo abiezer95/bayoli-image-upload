@@ -22,8 +22,8 @@ $logged = is_user_logged_in();
       name="viewport" 
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <title>Send us your images here</title>
-
+    <title>Bayoli - upload your order here</title>
+    <link rel="shortcut icon" href="http://www.bayoli.tk/wp-content/uploads/2019/07/borde-negro-42.png"/>
     <!-- css -->
     <link
       rel="stylesheet"
@@ -40,9 +40,14 @@ $logged = is_user_logged_in();
     <script src="js/main.js"></script>
   </head>  
   <body>
-    <!-- <div class="loader" style="display: none;">
-        
-    </div> -->
+    <div class="load">
+      <div class="load2">
+        <div class="spinner-border text-warning" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <tt>Loading your image..</tt>
+      </div>
+    </div>
 
     <div class="body-container container-fluid" id="app">
       <a class="menu-btn">
@@ -176,8 +181,19 @@ $logged = is_user_logged_in();
     <?php 
           if($logged){
             include('loads/admin/header.php');
-          }
+          }else{
     ?>
+      <!-- <script>
+        $(document).ready(function() {
+          $order = JSON.parse(localStorage.getItem('uploaded'));
+            if($order.length > 0){
+                $.post('loads/oscurePic/images.php', {oscurePic: 1, order: JSON.stringify($order)}, function(data){
+                    $(".picUpdateFrame").html(data)
+                })
+            }
+        })
+      </script> -->
+    <?php } ?>
     </div>
 
     <div class="toasts">

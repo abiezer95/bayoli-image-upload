@@ -3,7 +3,7 @@
     <div class="adminBtn">
         <button type="button" class="btn btn-danger adminPrints">Print Options</button>
         <button type="button" class="btn btn-danger adminSize">Size Options</button>
-        <button type="button" class="btn btn-warning ">Seach Image</button>
+        <!-- <button type="button" class="btn btn-warning ">Seach Image</button> -->
     </div>
 
     <div style="display:flex;justify-content:center;display:none">

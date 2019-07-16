@@ -10,7 +10,7 @@ require '../../database/definitions.php';
             <select id="existing">
                 <option value="null">N/A</option>
                 <?php
-                    $existing = getAll('sizes', ['name', 'id'], '');
+                    $existing = getAll('type_prints', ['name', 'id'], '');
                     foreach ($existing as $key => $value) {
                         echo "<option value='".$existing[$key]['id']."'>".$existing[$key]['name']."</option>";
                     }
@@ -19,8 +19,10 @@ require '../../database/definitions.php';
             </select>
         </div>
         
-        <label for="elMenu" class="mt-2">Menu name:</label>
-        <input type="text" class="form-control" id="elMenu" aria-describedby="emailHelp" placeholder="Name (opcional for existing)">
+        <div class="elMenu">
+            <label for="elMenu" class="mt-2">Menu name:</label>
+            <input type="text" class="form-control" id="elMenu" aria-describedby="emailHelp" placeholder="Name (opcional for existing)" disabled>
+        </div>
         
         <small id="emailHelp" class="form-text text-muted">This is the tab menu.</small>
     </div>
@@ -34,7 +36,7 @@ require '../../database/definitions.php';
 </form>
 
 <script> 
-    var size_elemets = <?php echo json_encode(getAll('types_sizes', ['name', 'price', 'id_sizes', 'id'], ''));?>;
+    var size_elements = <?php echo json_encode(getAll('types_sizes', ['id', 'name', 'price', 'id_type_prints'], ''));?>;
 </script>
 <script src="loads/sizes/js/editsize.js"></script>
 <style>

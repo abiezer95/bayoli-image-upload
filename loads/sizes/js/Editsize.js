@@ -23,7 +23,7 @@ $(document).ready(() => {
         return false;
     })
 
-    $('.nav-link').on('click', function(){
+    $('.nav-link').on('click', function(){ //editing
         $('.nav-link').removeClass('active')
         $(this).addClass('active')
         status = localStorage.getItem('pstatus');
@@ -44,6 +44,7 @@ $(document).ready(() => {
              
              $('.existing').hide('fast');
              $('.addMoreElements').hide('fast');
+             $('.elMenu').show('fast');
              n = 0;
              
              localStorage.setItem('pstatus', 'edit');
@@ -54,6 +55,7 @@ $(document).ready(() => {
 
              $('.existing').show('fast');
              $('.addMoreElements').show('fast');
+             $('.elMenu').hide('fast');
              n = 0;
              id = '';
              localStorage.setItem('pstatus', 'create')
@@ -68,7 +70,7 @@ function getEl(){ // getting elements
     
     if($('#existing').val() != "") sizes.id = $('#existing').val()
 
-    if($('#elMenu').val().length > 0) sizes.menu = $('#elMenu').val()
+    // if($('#elMenu').val().length > 0) sizes.menu = $('#elMenu').val()
 
     $('.elName').each(function(){
         if($(this).val().length > 0){
@@ -90,10 +92,10 @@ function getEl(){ // getting elements
     // console.log(sizes)
     return sizes;
 }
-function setAll(id){ 
+function setAll(id){
     var i = 0;
     $('.elSize').html('')
-    data = size_elemets.filter(x => x.id_sizes == id);
+    data = size_elements.filter(x => x.id_type_prints == id);
     
     
     $('.nav-link').each(function(){
@@ -101,6 +103,7 @@ function setAll(id){
             $('#elMenu').val($(this).text());
         }  
     })
+
 
     for(let item in data){
         addElements()

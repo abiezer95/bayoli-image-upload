@@ -16,33 +16,34 @@
         <div class="card hdP_card" style="width: 95%;">
             <ul class="list-group">
                 <?php 
-                $types = getAll('type_prints', ['name', 'price', 'id'], '');
+                $types = getAll('type_prints', ['name', 'id'], '');
                 $n = 0;
                 foreach ($types as $key => $value) {
                     if($n <= 0){
                     echo '
-                        <li class="list-group-item" key="'.$types[$key]['id'].'" canChange price="'.$types[$key]['price'].'">
+                        <li class="list-group-item" key="'.$types[$key]['id'].'" canChange>
                             <tt>'.strtoupper($types[$key]['name']).'</tt>
-                            <span>'.$types[$key]['price'].'$</span>
+                            
                         <i class="selectedprint"></i>
                         </li>
                     ';
                     }
+                    // <span>'.$types[$key]['price'].'$</span>
 
                     if($n >= 1 && $n <=3){
                         echo '
-                            <li class="list-group-item" key="'.$types[$key]['id'].'" price="'.$types[$key]['price'].'">
+                            <li class="list-group-item" key="'.$types[$key]['id'].'">
                                 <tt>'.strtoupper($types[$key]['name']).'</tt>
-                                <span>'.$types[$key]['price'].'$</span>
+                            
                             <i class="selectedprint"></i>
                             </li>';
                     }
                     
                     if($n >= 4){
                         echo '
-                            <li class="list-group-item" key="'.$types[$key]['id'].'" price="'.$types[$key]['price'].'" canChange>
+                            <li class="list-group-item" key="'.$types[$key]['id'].'" canChange>
                                 <tt>'.strtoupper($types[$key]['name']).'</tt>
-                                <span>'.$types[$key]['price'].'$</span>
+                                
                             <i class="selectedprint"></i>
                             </li>';
                     }

@@ -58,8 +58,8 @@ function prints_active(){ //this active the print in both places modal and hd pr
       $('.list-group-item').each(function(){
           let active = $(this).attr('key');
           if(active == key){
-                price = $(this).attr('price')
-                $('.price span tt').html(price)
+                // price = $(this).attr('price')
+                // $('.price span tt').html(price)
                 localStorage.setItem('pActiveId', key)
                 //to change the price
               $(this).addClass('active')

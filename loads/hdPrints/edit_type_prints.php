@@ -29,7 +29,7 @@
 <script>
     localStorage.setItem('pstatus', 'create')
     var n = 0 ;
-    var prints = <?php echo json_encode(getAll('type_prints', ['name', 'price', 'id'], '')); ?>;
+    var prints = <?php echo json_encode(getAll('type_prints', ['name', 'id'], '')); ?>;
     var pdelete = []
     
     $(document).ready(() => {
@@ -38,7 +38,7 @@
        
             if(status == 'create'){
                 $.post("database/hd_print/create.php", getEl(), function(data){
-                    // console.log(data);
+                    console.log(data);
                     pclose()
                 })
             }else{
@@ -97,8 +97,8 @@ function setAll(){
             $('.elName:eq('+item+')').val(prints[item]['name']); 
             $('.elName:eq('+item+')').attr('key', prints[item]['id']);
 
-            $('.elPrice:eq('+item+')').val(prints[item]['price']);
-            $('.elPrice:eq('+item+')').attr('key', prints[item]['id']);
+            // $('.elPrice:eq('+item+')').val(prints[item]['price']);
+            // $('.elPrice:eq('+item+')').attr('key', prints[item]['id']);
             i++;
         }, 0);
     }
@@ -115,7 +115,7 @@ function deleteEl(n, i){
 }
 
 function getEl(){ // getting elements
-    var sizes = {printName: [], printPrice: [], id: [], eliminated: null};
+    var sizes = {printName: [], id: [], eliminated: null};
     var z = 0;
 
     $('.elName').each(function(){
@@ -127,18 +127,21 @@ function getEl(){ // getting elements
         z++;
     })
 
-    $('.elPrice').each(function(){
-        if($(this).val() != "") sizes.printPrice.push($(this).val())
-    })
+    // $('.elPrice').each(function(){
+    //     if($(this).val() != "") sizes.printPrice.push($(this).val())
+    // })
     
     sizes.eliminated = pdelete;
     // console.log(sizes.eliminated)
-    if(z == 0) sizes.printName.push(""), sizes.printPrice.push("")
+    if(z == 0) sizes.printName.push("") //sizes.printPrice.push("")
 
     return sizes;
 }
 
  function addElements(){
+    // <input type="number" class="form-control elPrice" aria-describedby="emailHelp" placeholder="Price" required step="any">
+
+    // <input type="number" class="form-control elPrice" aria-describedby="emailHelp" placeholder="Price" required step="any">
      setTimeout(() => {
         n++;
         status = localStorage.getItem('pstatus');
@@ -147,7 +150,7 @@ function getEl(){ // getting elements
             <div class="element`+n+`">
                 <label class="pNumber">•</label>
                 <input type="text" class="form-control elName" aria-describedby="emailHelp" placeholder="Name" required>
-                <input type="number" class="form-control elPrice" aria-describedby="emailHelp" placeholder="Price" required step="any">
+                
                 <i class="fas fa-trash" style="position:absolute;right:20px;margin-top:10px" onclick="deleteEl(`+n+`, `+n+`)"></i>
             <div>
         `);
@@ -156,7 +159,7 @@ function getEl(){ // getting elements
             <div class="element`+n+`" key="`+prints[n-1]['id']+`">
                 <label class="pNumber">•</label>
                 <input type="text" class="form-control elName" aria-describedby="emailHelp" placeholder="Name" required>
-                <input type="number" class="form-control elPrice" aria-describedby="emailHelp" placeholder="Price" required step="any">
+                
                 <i class="fas fa-trash" style="position:absolute;right:20px;margin-top:10px" onclick="deleteEl(`+prints[n-1]['id']+`, `+n+`)"></i>
             <div>
         `);

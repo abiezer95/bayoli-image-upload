@@ -54,12 +54,12 @@
           <ul class="list-group list-prints">
             <div class="list-prints-update">
             <?php 
-              $types = getAll('type_prints', ['name', 'price', 'id'], '');
+              $types = getAll('type_prints', ['name', 'id'], '');
               $n = 0;
               foreach ($types as $key => $value) {
                 if($n <= 0){
                   echo '
-                    <li class="list-group-item active" id="pChanged" key="'.$types[$key]['id'].'" price="'.$types[$key]['price'].'">
+                    <li class="list-group-item active" id="pChanged" key="'.$types[$key]['id'].'">
                       <tt>'.strtoupper($types[$key]['name']).'</tt>
                       <i class="far fa-check-circle selectedprint"></i>
                     </li>
@@ -68,7 +68,7 @@
 
                 if($n >= 1 && $n <=3){
                   echo '
-                    <li class="list-group-item" key="'.$types[$key]['id'].'" price="'.$types[$key]['price'].'">
+                    <li class="list-group-item" key="'.$types[$key]['id'].'">
                       '.strtoupper($types[$key]['name']).'
                     <i class="selectedprint"></i>
                     </li>
@@ -89,9 +89,9 @@
           </ul>
 
           <div class="price">
-            <span>Price: $<tt>print-Price</tt></span>
+            <!-- <span>Total to pay: $<tt>0</tt></span> -->
             <label
-              >For more information contact us. <a href="">Click Here</a></label
+              >For more information contact us. <a href="<?php echo get_site_url(); ?>/contact/">Click Here</a></label
             >
           </div>
           </div>

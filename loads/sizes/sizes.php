@@ -1,5 +1,5 @@
 <?php 
-require '../../database/definitions.php'; 
+require '../../database/definitions.php';
 require_once('../../../wp-load.php');
 
 $logged = is_user_logged_in();
@@ -8,37 +8,37 @@ $logged = is_user_logged_in();
         <div class="pclose" onclick="pclose()">
             <i class="fas fa-chevron-left"></i>
         </div>
-        <i class="fas fa-chevron-right flecha-d"></i>
+        <!-- <i class="fas fa-chevron-right flecha-d"></i> -->
         <div class="menuSlider">
         <ul class="nav nav-tabs allTabs">
                 <?php 
-                    $sizes = getAll('sizes', ['name', 'id'], '');
+                    $type_prints = getAll('type_prints', ['name', 'id'], '');
                     $n = 0;
                     $i = 0;
-                    foreach ($sizes as $key => $value) {
+                    foreach ($type_prints as $key => $value) {
                         echo '
                             <li class="nav-item">
-                                <a class="nav-link" href="#'.str_replace(' ', '_', $sizes[$key]['name']).'"
-                                key="'.$sizes[$key]['id'].'"
-                                >'.$sizes[$key]['name'].'</a>
+                                <a class="nav-link" href="#'.str_replace(' ', '_', $type_prints[$key]['name']).'"
+                                key="'.$type_prints[$key]['id'].'"
+                                >'.$type_prints[$key]['name'].'</a>
                             </li>
                         ';
-                        $n++; 
+                        $n++;
                     }
                 ?>
             </ul>
         </div>
-        <i class="fas fa-chevron-left flecha-r"></i>
+        <!-- <i class="fas fa-chevron-left flecha-r"></i> -->
 
         <div class="sizeNewOptions">
             <?php 
                 if ($logged) { //is logged
             ?>
                 <button type="button" class="btn btn-success addNewSises">Add new sizes</button>
-                <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button>
+                <!-- <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button> -->
             <?php }else {?>
                 <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button>
-                <button type="button" class="btn btn-warning">Reset options</button>
+                <!-- <button type="button" class="btn btn-warning">Reset options</button> -->
             <?php }?>
         </div>
         
@@ -58,10 +58,10 @@ $logged = is_user_logged_in();
 <?php 
     $no = 0;
     while($i < $n) {
-        $typeSizes = getAll('types_sizes', ['name', 'price', 'id', 'id_sizes'], ['id_sizes' =>  $sizes[$i]['id']]);
+        $typeSizes = getAll('types_sizes', ['name', 'price', 'id', 'id_type_prints'], ['id_type_prints' =>  $type_prints[$i]['id']]);
         echo '
-            <div id="'.str_replace(' ', '_', $sizes[$i]['name']).'" >
-                <h4>'.$sizes[$i]['name'].'</h4>
+            <div id="'.str_replace(' ', '_', $type_prints[$i]['name']).'" >
+                <h4>'.$type_prints[$i]['name'].'</h4>
                 <hr style="width:85%">';
                 
                 foreach ($typeSizes as $key => $value) {
@@ -71,7 +71,7 @@ $logged = is_user_logged_in();
                         <span>$'.$typeSizes[$key]['price'].' each</span>
                         <div class="countSize">
                             <button type="button" class="btn btn-primary" onclick="res_prints('.$no.', '.$i.')">-</button>
-                            <input type="text" class="form-control prints_count" key="'.$typeSizes[$key]['id'].' '.$typeSizes[$key]['id_sizes'].'" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value=0 disabled>
+                            <input type="text" class="form-control prints_count" key="'.$typeSizes[$key]['id'].'" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" value=0 disabled>
                             <button type="button" class="btn btn-primary" onclick="sum_prints('.$no.', '.$i.')">+</button>
                         </div>
                     </section>
@@ -90,11 +90,12 @@ $logged = is_user_logged_in();
         @import url('loads/sizes/css/sizes.css');
     </style>
 
+<script src="js/sweetalert.min.js"></script>
 <script src="js/jquery.mousewheel.js"></script>
 <script>
-var sizes = <?php echo json_encode(getAll('sizes', ['name', 'id'], '')); ?>;
+var sizes = <?php echo json_encode(getAll('type_prints', ['name', 'id'], '')); ?>;
 
-var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '')); ?>;
+var types = <?php echo json_encode(getAll('types_sizes', ['name'], '')); ?>;
 
     $(document).ready(() => {
 
@@ -153,6 +154,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '
         function loadEditSize(n){
             $('.editSizes').load('loads/sizes/editSizes.php');
             $('.sizeContent').hide('fast');
+            $('.emailSize').hide('fast');
 
             if(n) localStorage.setItem('pstatus', 'edit')
         }
@@ -167,7 +169,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '
             $(".prints_count").each(function(){
                 if($(this).val() != 0){
                     id = $(this).attr('key').split(' ');
-                    sizes.push({id_types: id[0], id_sizes: id[1], counts: $(this).val()})
+                    sizes.push({id_types: id[0], counts: $(this).val()})
                 }
             })
 
@@ -188,7 +190,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '
                 data.append('type_prints_id', localStorage.getItem('pActiveId'))
                 data.append('sizes', JSON.stringify(sizes))
                 data.append('email', email)
-
+                $('.load').css('display', 'block')
                 $.ajax({
                     type: "POST",
                     url: 'database/img_uploaded/upload.php',
@@ -196,7 +198,9 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '
                     data: data,
                     contentType: false,
                     success: function (data) {
-                        localStorage.setItem('uploaded', data)
+                        oscurePic(data)
+                        $('.load').css('display', 'none')
+                        swal("Good job!", "Your order has been sent", "success");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         
@@ -204,5 +208,18 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name', 'id_sizes'], '
                 })
 
                 $(".piSizes").hide("fast")        
+        }
+
+        function oscurePic(data){ // to set the pic uploaded 
+            $order = localStorage.getItem('uploaded');
+            if($order == undefined || $order == ''){
+                localStorage.setItem('uploaded', JSON.stringify([data]))
+            }else{
+                $orders = JSON.parse($order);
+                $orders.push(data);
+                localStorage.setItem('uploaded', JSON.stringify($orders))
+            }
+            
+            $('.oscureDiv').css('display', 'none')
         }
 </script>

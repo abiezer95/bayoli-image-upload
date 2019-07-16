@@ -4,7 +4,9 @@ $(document).ready(function() {
     // openSize()
     // $(".piSizes").css("display", 'block')
     // $(".piSizes").load("loads/hdPrints/list_type_prints.php")
+    // localStorage.setItem('uploaded', JSON.stringify([5]))
 });
+
 
 function viewDetailsPrint(img, id){
     $(".piSizes").show("fast")
