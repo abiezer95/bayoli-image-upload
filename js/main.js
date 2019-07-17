@@ -9,8 +9,16 @@ $(document).ready(function() {
 
 
 function viewDetailsPrint(img, id){
-    $(".piSizes").show("fast")
-    $(".piSizes").load("loads/viewer/viewer.php?view="+id+"&img="+img+"")
+    completed = window.location.href;
+                
+    if(completed.split('?')[1] != undefined) completed = 1
+    else completed = 0
+
+    $(".piSizes").load("loads/viewer/viewer.php?view="+id+"&img="+img+"&completed="+completed+"")
+
+    setTimeout(() => {
+        $(".piSizes").show("fast")
+    }, 300);
 }
 
 function getFile(){
@@ -71,10 +79,14 @@ function getFile(){
         })
 }
 
-function openSize(){
-  $(".piSizes").css("display", 'block')
-  $(".piSizes").load("loads/sizes/sizes.php")
-}
+// function openSize(){
+//   $(".piSizes").load("loads/sizes/sizes.php")
+//   $('.load').css('display', 'block')
+//   setTimeout(() => {
+//     $(".piSizes").css("display", 'block')
+//     $('.load').css('display', 'none')
+//   }, 5000);
+// }
 
 function anotherFile(){
     $('#picmodal').modal('hide');

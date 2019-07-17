@@ -19,14 +19,20 @@
 <script>
     $(document).ready(function(){
         $('.adminPrints').click(() => {
-            $(".piSizes").css("display", 'block')
             $(".piSizes").load("loads/hdPrints/edit_type_prints.php")
+            
+            setTimeout(() => {
+                $(".piSizes").css("display", 'block')
+            }, 500);
+            
             $('#picmodal').modal('hide');
         })
         
         $('.adminSize').click(() => {
-            $(".piSizes").css("display", 'block')
             $(".piSizes").load("loads/sizes/sizes.php")
+            setTimeout(() => {
+                $(".piSizes").css("display", 'block')
+            }, 500);
         })
 
         $('.search-it').on('keyup', function(){

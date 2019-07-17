@@ -27,9 +27,13 @@ function modalPrints(el){ //to show active option print
 var count = 0;
 function nsteps(){ //next step to show sizes
   count++;
-  $(".piSizes").show("fast")
+  
   $(".piSizes").load("loads/sizes/sizes.php")
-    
+
+  setTimeout(() => {
+    $(".piSizes").show("fast")
+  }, 500);
+      
   $(".allTabs li a").removeClass("active")
   $(".allTabs li a:eq("+count+")").addClass("active")
 

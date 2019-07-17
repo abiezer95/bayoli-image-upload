@@ -94,10 +94,24 @@ $detect->isTablet()){
           <div class="side_menu_section">
             <h4 class="side_title">filter by:</h4>
             <ul id="filtr-container" class="filter_nav">
-              <li data-filter="*" class="active"><a href='./'>all</a></li>
+              <?php
+                if (!$logged) {
+                  echo '<li data-filter="*" class="active"><a href="./">all</a></li>';
+                }else{
+                  if(!isset($_GET['completed'])){
+                    echo '<li data-filter="*" class="active"><a href="./">all</a></li>';
+                  }else{
+                    echo '<li data-filter="*"><a href="./">all</a></li>';
+                  }
+                }
+              ?>
               <?php
                 if ($logged) {
-                  echo '<li data-filter="completed"><a href="?completed">Completed</a></li>';
+                  if(isset($_GET['completed'])){
+                    echo '<li data-filter="completed" class="active"><a href="?completed">Completed</a></li>';
+                  }else{
+                    echo '<li data-filter="completed"><a href="?completed">Completed</a></li>';
+                  }
                 }
               ?>
               <!-- <li data-filter=".branding"><a>Popular</a></li>

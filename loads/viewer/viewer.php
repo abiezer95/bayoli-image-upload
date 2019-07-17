@@ -5,10 +5,14 @@
     $logged = is_user_logged_in();
 
     $orderID = $_GET['view'];
+
+    $completed = $_GET['completed'];
     
     $order_print = getAll('order_print', ['id', 'id_img', 'id_type_prints', 'id_types_sizes', 'order_count', 'email'], ['id' => $orderID]);
 
     $id_type_prints = getAll('type_prints', ['name'], ['id' => $order_print[0]['id_type_prints']]);
+
+    clearstatcache();
 ?>
 <div id="side_bar_custom">
         <div class="pclose" onclick="pclose()">
@@ -24,12 +28,13 @@
                 <div class="vOptions">
                     <a href="database/download/download.php?file=<?php echo $img;?>"><button type="button" class="btn btn-light">Download the image <i class="fas fa-cloud-download-alt"></i></button></a>
                     <br>
-                    <?php if ($logged == true) { ?>
+                    <?php if ($logged == true and $completed==0) { ?>
                         
                         <button type="button" class="btn btn-light mt-2" title="This item will be remove permanently" onclick="mark_as_completed(<?php echo $orderID; ?>)">Mark this order as completed <i class="fas fa-minus-square"></i></button>
 
-                    <?php }else { ?>
-
+                    <?php } 
+                    if ($logged == true and $completed==1) { ?>
+                    
                         <button type="button" class="btn btn-light mt-2" title="This item will be remove permanently" onclick="cancelOrder(<?php echo $orderID; ?>)">Cancel order <i class="fas fa-ban"></i></button>
 
                     <?php } ?>

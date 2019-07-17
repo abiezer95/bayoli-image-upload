@@ -38,7 +38,7 @@
        
             if(status == 'create'){
                 $.post("database/hd_print/create.php", getEl(), function(data){
-                    console.log(data);
+                    // console.log(data);
                     pclose()
                 })
             }else{

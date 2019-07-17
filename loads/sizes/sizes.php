@@ -27,7 +27,7 @@ if($roles[0] == 'administrator'){
                             <li class="nav-item">
                                 <a class="nav-link" href="#'.str_replace(' ', '_', $type_prints[$key]['name']).'"
                                 key="'.$type_prints[$key]['id'].'"
-                                >'.$type_prints[$key]['name'].'</a>
+                                >'.strtoupper($type_prints[$key]['name']).'</a>
                             </li>
                         ';
                         $n++;
@@ -68,7 +68,7 @@ if($roles[0] == 'administrator'){
         $typeSizes = getAll('types_sizes', ['name', 'price', 'id', 'id_type_prints'], ['id_type_prints' =>  $type_prints[$i]['id']]);
         echo '
             <div id="'.str_replace(' ', '_', $type_prints[$i]['name']).'" >
-                <h4>'.$type_prints[$i]['name'].'</h4>
+                <h4>'.strtoupper($type_prints[$i]['name']).'</h4>
                 <hr style="width:85%">';
                 
                 foreach ($typeSizes as $key => $value) {
@@ -227,6 +227,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name'], '')); ?>;
                 localStorage.setItem('uploaded', JSON.stringify($orders))
             }
             
+            toasts('Your order has been sent successfully...');
             $('.oscureDiv').css('display', 'none')
         }
 </script>
