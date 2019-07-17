@@ -37,7 +37,9 @@ require '../../database/definitions.php';
 
 <script> 
     var size_elements = <?php echo json_encode(getAll('types_sizes', ['id', 'name', 'price', 'id_type_prints'], ''));?>;
+    localStorage.setItem('pstatus', 'create')
 </script>
+
 <script src="loads/sizes/js/editsize.js"></script>
 <style>
 .pstatus{

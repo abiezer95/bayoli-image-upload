@@ -1,10 +1,27 @@
 <?php 
 require 'database/definitions.php'; 
+require 'database/is_mobile.php'; //detect mobile
 require_once('../wp-load.php');
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $logged = is_user_logged_in();
+$user = wp_get_current_user();
+$roles = $user->roles;
+if($logged){
+  if($roles[0] == 'administrator'){
+    $logged = true;
+  }else{
+    $logged = false;
+  }
+}
+//mobile
+$detect = new Mobile_Detect;
+
+if($detect->isMobile() or
+$detect->isTablet()){
+  header("/");
+}
 // if ($logged == false) {
 //   header("Refresh:0");
 // }
@@ -77,9 +94,11 @@ $logged = is_user_logged_in();
           <div class="side_menu_section">
             <h4 class="side_title">filter by:</h4>
             <ul id="filtr-container" class="filter_nav">
-              <li data-filter="*" class="active"><a>all</a></li>
+              <li data-filter="*" class="active"><a href='./'>all</a></li>
               <?php
-                // echo '<li data-filter="completed"><a>Completed</a></li>';
+                if ($logged) {
+                  echo '<li data-filter="completed"><a href="?completed">Completed</a></li>';
+                }
               ?>
               <!-- <li data-filter=".branding"><a>Popular</a></li>
               <li data-filter=".design"><a>design</a></li>

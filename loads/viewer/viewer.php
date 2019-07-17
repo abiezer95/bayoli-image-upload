@@ -70,6 +70,7 @@
         position: relative;
         top: 65px;
         left: 28px;
+        overflow:auto
     }
     .viewerContent .imageV img{
         width: 112px;
@@ -89,6 +90,9 @@
     }
     .allContent{
         position:relative;
-        top: 20px
+        top: 20px;
+    }
+    .allContent .list-group{
+        height:400px
     }
 </style>

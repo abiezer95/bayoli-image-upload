@@ -2,30 +2,39 @@
 // error_reporting(0);
 // ini_set('display_errors', 0);
 
-    $page = 0;
+    $status = 0;
+    $isSearch = 0;
+    $search = '';
+    
+if(isset($_GET['completed'])){
+    $status = 1;
+}
 
-    if(isset($_GET['page'])){
-        $page = $_GET['page'];
-    }
+if(isset($_GET['isSearch']) && isset($_GET['search'])){
+    $isSearch = $_GET['isSearch'];
+    $search = $_GET['search'];
+}
 
-    if($page >= 2){
-        $page = $page*10 - 10;
-    }
-
-    if($page == 1) {
-        $page = 0;
-    }
-
-    $count = countTable("order_print", [
-        "status" => 0
-    ]);
-
+if($isSearch == 1){
+    require 'database/definitions.php'; 
+    require_once('../wp-load.php');
+    
+    $logged = is_user_logged_in();
     $order_print = getAll('order_print', 
         ['id', 'id_img', 'id_type_prints', 'id_types_sizes', 'order_count', 'email', 'status'],
-        ['status' => 0, "ORDER" => ["id" => "DESC"],
-        "LIMIT" => [$page, 11]]
+        [
+            'status' => $status, "ORDER" => ["id" => "DESC"],
+            "LIMIT" => [0, 11],
+            'AND' => ['email[~]' => $search],
+        ]
     );
-
+}else{
+    $order_print = getAll('order_print', 
+        ['id', 'id_img', 'id_type_prints', 'id_types_sizes', 'order_count', 'email', 'status'],
+        ['status' => $status, "ORDER" => ["id" => "DESC"],
+        "LIMIT" => [0, 11]]
+    );
+}
     $left = ['24.9962%', '49.9925%', '74.9887%', '0%', '24.9962%', '49.9925%', '74.9887%', '0%', '24.9962%', '49.9925%', '74.9887%'];
     $top = ['0%', '0%', '0%', '266px', '266px', '266px', '266px', '522px', '522px', '522px', '522px'];
     
@@ -94,46 +103,3 @@
                 </div>';
             }
         }//endfor
-
-    if($n >= 11){
-    ?>
-        <nav aria-label="Page navigation" class="pagination-index">
-        <ul class="pagination">
-        
-        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-        <li class="page-item">
-            <a class="page-link" href="?page=1" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-            </a>
-        </li>
-    <?php
-        for($n = 1, $i = 1; $n < (int)$count; $n ++) { //pagination
-            if($n%10 == 1){
-            if($i < 3){
-                echo '<li class="page-item"><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
-            }
-            
-            //   if($i < 5){
-            //     echo '<li class="page-item"><a>........</a></li>';
-            //   }
-            
-            if($count < $n+9){
-                echo '<li class="page-item"><a class="page-link" href="?page='.$i.'">'.$i.'</a></li>';
-                
-                echo '<li class="page-item">
-                        <a class="page-link" href="?page='.$i.'" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>';
-            }
-
-            $i++;
-            }
-        }
-    ?>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    
-    </ul>
-</nav>
-
-<?php }?>

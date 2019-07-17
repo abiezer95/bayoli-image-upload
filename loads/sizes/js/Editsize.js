@@ -5,7 +5,7 @@ var id = null; //esto sera asignado mas abajo para setall
 
 $(document).ready(() => {
     addElements();
-    
+
     $('.editMenu').submit(() => {
         status = localStorage.getItem('pstatus');
         if(status == 'edit'){

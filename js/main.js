@@ -18,7 +18,7 @@ function getFile(){
         $(".inout2").html(`<img id="output">`);
         $("#piData").html(`
         <form id="upload_img">
-            <input type="file" name="new_pic" class="piFiles" accept="image/*">
+            <input type="file" name="new_pic" class="piFiles" accept="image/jpeg">
         </form>`);
         
         $('.piFiles').click()

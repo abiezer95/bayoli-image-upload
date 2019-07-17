@@ -3,6 +3,13 @@ require '../../database/definitions.php';
 require_once('../../../wp-load.php');
 
 $logged = is_user_logged_in();
+$user = wp_get_current_user();
+$roles = $user->roles;
+if($roles[0] == 'administrator'){
+  $logged = true;
+}else{
+  $logged = false;
+}
 ?>
     <div id="side_bar_custom">
         <div class="pclose" onclick="pclose()">
@@ -200,7 +207,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name'], '')); ?>;
                     success: function (data) {
                         oscurePic(data)
                         $('.load').css('display', 'none')
-                        swal("Good job!", "Your order has been sent", "success");
+                        swal("Good job!", "Your order has been sent!", "success");
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         
