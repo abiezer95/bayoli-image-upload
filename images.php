@@ -23,7 +23,9 @@ if($isSearch == 1){
     $order_print = getAll('order_print', 
         ['id', 'id_img', 'id_type_prints', 'id_types_sizes', 'order_count', 'email', 'status'],
         [
-            'status' => $status, "ORDER" => ["id" => "DESC"],
+            'status' => $status, 
+            'pay_status' => true,
+            "ORDER" => ["id" => "DESC"],
             "LIMIT" => [0, 11],
             'AND' => ['email[~]' => $search],
         ]
@@ -31,7 +33,7 @@ if($isSearch == 1){
 }else{
     $order_print = getAll('order_print', 
         ['id', 'id_img', 'id_type_prints', 'id_types_sizes', 'order_count', 'email', 'status'],
-        ['status' => $status, "ORDER" => ["id" => "DESC"],
+        ['status' => $status, 'pay_status' => true, "ORDER" => ["id" => "DESC"],
         "LIMIT" => [0, 11]]
     );
 }

@@ -2,9 +2,50 @@ $(document).ready(function() {
     // $(".piSizes").css("display", 'block')
     // $(".piSizes").load("loads/hdPrints/edit_type_prints.php")
     // openSize()
+    const urlParams = new URLSearchParams(window.location.search);
+    const payment = urlParams.get('payment');
+
+        data = JSON.parse(localStorage.getItem('productId'));
+        if(data != undefined){
+            if(payment == '0etw0' || payment == undefined){
+                var content = {
+                    id: data[0],
+                    img: data[1],
+                    email: localStorage.getItem('email'),
+                    sizes: JSON.parse(localStorage.getItem('sizes')),
+                    type_prints_id: localStorage.getItem('pActiveId'),
+                };
+                $(".piSizes").load("loads/payment/payment.php", content)
+            }
+            if(payment == 'true1'){
+                var content = {
+                    id: data[0],
+                    img: data[1],
+                    email: localStorage.getItem('email'),
+                    sizes: JSON.parse(localStorage.getItem('sizes')),
+                    type_prints_id: localStorage.getItem('pActiveId'),
+                    pagado: 0
+                };
+                $(".piSizes").load("loads/payment/payment.php", content)
+            }
+
+            $(".piSizes").css("display", 'block')
+        }
+        
+        
+    
+    // if()
     // $(".piSizes").css("display", 'block')
-    // $(".piSizes").load("loads/hdPrints/list_type_prints.php")
+    // $(".piSizes").load("loads/payment/payment.php?view=3&img=1")
     // localStorage.setItem('uploaded', JSON.stringify([5]))
+    // $(".piSizes").load("loads/payment/payment.php", 
+    // {
+    //     id: 16,
+    //     email: 'asasd',
+    //     sizes: [{'id_types': 1, counts: 2},{'id_types': 2, counts: 2}],
+    //     type_prints_id: localStorage.getItem('pActiveId'),
+    //     // pagado: 0
+    // })
 });
 
 
@@ -18,12 +59,11 @@ function viewDetailsPrint(img, id){
 
     setTimeout(() => {
         $(".piSizes").show("fast")
-    }, 300);
+    }, 500);
 }
 
 function getFile(){
 
-        $(".inout2").html(`<img id="output">`);
         $("#piData").html(`
         <form id="upload_img">
             <input type="file" name="new_pic" class="piFiles" accept="image/jpeg">
@@ -38,17 +78,20 @@ function getFile(){
             if(t > 0){
                 var reader = new FileReader();
                 reader.onload = function(){
-                    $("#output").attr("src", reader.result);
-                    
-                    var img = new Image();
+                    // $("#output").attr("src", reader.result);
+                    // $(".inout").html(`<img id="output">`);
+                    // $("#output").attr("src", reader.result);
 
+                    var img = new Image();
+                    
                     img.src = reader.result;
 
                     img.onload = function() {
                         x = img.width;
                         y = img.height;
 
-                        localStorage.setItem('img', reader.result);
+                        // localStorage.setItem('img', reader.result);
+                        $('.cacheData').html(reader.result)
                         localStorage.setItem("imgx", x)
                         localStorage.setItem("imgy", y)
                         
@@ -96,7 +139,8 @@ function anotherFile(){
 }
 
 function fullSize(){
-    let img = localStorage.getItem('img');
+    // let img = localStorage.getItem('img');
+    let img = $('.cacheData').html()
     $(".inout").html(`<img id="output">`);
     $("#output").attr("src", img);
 

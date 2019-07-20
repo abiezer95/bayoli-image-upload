@@ -65,6 +65,14 @@ $(document).ready(() => {
      })
 })
 
+function openSize(){
+    $(".piSizes").css("display", "none")
+    $(".piSizes").load("loads/sizes/sizes.php")
+    setTimeout(() => {
+        $(".piSizes").css("display", 'block')
+    }, 500);
+}
+
 function getEl(){ // getting elements
     var sizes = {menu: '', elname: [], elprice: [], elId: [], id: null,  eliminated: null};
     

@@ -37,14 +37,16 @@
 
         $('.search-it').on('keyup', function(){
             $('.searchLoad').css('opacity', 1)
-            setTimeout(() => {                
-                completed = window.location.href;
+            setTimeout(() => {
+                const urlParams = new URLSearchParams(window.location.search);
+                const completed = urlParams.get('completed');
                 
-                if(completed.split('?')[1] != undefined) completed = 'completed'
-                else completed = ''
+                // console.log(completed)
+                if(completed != null) comp = 'completed'
+                else comp = ''
 
-                let uri = 'images.php?isSearch=1&search='+$('.search-it').val()+'&'+completed+'';
-
+                let uri = 'images.php?isSearch=1&search='+$('.search-it').val()+'&'+comp+'';
+    
                 $.post(uri, function(data){
                     $('.searchLoad').css('opacity', 0)
                     $('.picUpdateFrame').html(data)

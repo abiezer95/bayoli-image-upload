@@ -57,7 +57,7 @@
             $pay = $pay + (int)$type_sizes[0]['price'] * (int)json_decode($order_print[0]['order_count'])[$key];
         }
 
-        echo "<li class='list-group-item'>Total to pay: $".$pay."</li>";
+        echo "<li class='list-group-item'>Total: $".$pay."</li>";
     ?>
         
 </ul>

@@ -1,6 +1,7 @@
 <?php
     header('Access-Control-Allow-Origin: *');
     require '../definitions.php';
+
     include('imgCrop.php');
     
     
@@ -38,9 +39,10 @@
             'id_type_prints' => $_POST['type_prints_id'],
             'order_count' => json_encode($order_counts),
             'email' => $em,
+            'date' => date('Y/m/d H:i:s'),
         ]);
-        
-        echo $db->id();
+        $data = [$db->id(), $imgName];
+        echo json_encode($data);
     }
 }
 ?>

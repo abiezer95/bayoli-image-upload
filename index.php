@@ -214,19 +214,8 @@ $detect->isTablet()){
     <?php 
           if($logged){
             include('loads/admin/header.php');
-          }else{
+          }
     ?>
-      <!-- <script>
-        $(document).ready(function() {
-          $order = JSON.parse(localStorage.getItem('uploaded'));
-            if($order.length > 0){
-                $.post('loads/oscurePic/images.php', {oscurePic: 1, order: JSON.stringify($order)}, function(data){
-                    $(".picUpdateFrame").html(data)
-                })
-            }
-        })
-      </script> -->
-    <?php } ?>
     </div>
 
     <div class="toasts">
@@ -244,5 +233,7 @@ $detect->isTablet()){
           </div>
         </div>
     </div>
+
+    <div class="cacheData"></div>
   </body>
 </html>

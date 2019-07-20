@@ -44,18 +44,18 @@ if($roles[0] == 'administrator'){
                 <button type="button" class="btn btn-success addNewSises">Add new sizes</button>
                 <!-- <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button> -->
             <?php }else {?>
-                <button type="button" class="btn btn-success" onclick="finish_order()">Finish order</button>
+                <button type="button" class="btn btn-success" onclick="finish_order()">Go to last step</button>
                 <!-- <button type="button" class="btn btn-warning">Reset options</button> -->
             <?php }?>
         </div>
         
-        <form return false>
+        <div>
             <div class="form-group emailSize">
                 <label for="exampleInputEmail1">Email address:</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" require>
                 <small id="emailHelp" class="form-text text-muted"></small>
             </div>
-        </form>
+        </div>
 
 <div class="editSizes"></div>
 
@@ -177,6 +177,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name'], '')); ?>;
                 if($(this).val() != 0){
                     id = $(this).attr('key').split(' ');
                     sizes.push({id_types: id[0], counts: $(this).val()})
+                    
                 }
             })
 
@@ -207,7 +208,20 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name'], '')); ?>;
                     success: function (data) {
                         oscurePic(data)
                         $('.load').css('display', 'none')
-                        swal("Good job!", "Your order has been sent!", "success");
+                        swal("Good job!", "Your order has been saved!", "success");
+                        $(".piSizes").css("display", 'block')
+                        $(".piSizes").load("loads/payment/payment.php", 
+                        {
+                            id: JSON.parse(data)[0],
+                            img: JSON.parse(data)[1],
+                            email: email,
+                            sizes: sizes,
+                            type_prints_id: localStorage.getItem('pActiveId'),
+                        })
+                        // console.log(data)
+                        localStorage.setItem('productId', data);
+                        localStorage.setItem('email', email);
+                        localStorage.setItem('sizes', JSON.stringify(sizes));
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         
@@ -227,7 +241,7 @@ var types = <?php echo json_encode(getAll('types_sizes', ['name'], '')); ?>;
                 localStorage.setItem('uploaded', JSON.stringify($orders))
             }
             
-            toasts('Your order has been sent successfully...');
+            toasts('Your order has been saved. Proceed to pay');
             $('.oscureDiv').css('display', 'none')
         }
 </script>
